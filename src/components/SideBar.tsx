@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 export const SideBar = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  console.log({ pathname });
 
   const logout = () => {
     localStorage.clear();

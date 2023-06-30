@@ -1,23 +1,35 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { useLoginMutation } from '../store/api/user/userApi';
-import { UserRequest } from '../interface/user.interface';
-import { setCredentials } from '../store/slices/user/userSlice';
 import { useDispatch } from 'react-redux';
+
 import { useNavigate } from 'react-router-dom';
+
+import { SubmitHandler, useForm } from 'react-hook-form';
+
+import { setCredentials } from '../store/slices/user/userSlice';
+
+import { useLoginMutation } from '../store/api/user/userApi';
+
+import { UserRequest } from '../interface/user.interface';
+
+import { alertToast } from '../helpers/AlertsToast';
 
 const formInit: UserRequest = {
   email: '',
   password: '',
 };
 
+type ErrorMessage = {
+  data: {
+    message: string;
+  };
+};
+
 export const LoginPage = () => {
-  const [login, { isLoading, isError, error, isSuccess, data }] =
-    useLoginMutation();
+  const [login, { isLoading, isError, isSuccess, data }] = useLoginMutation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log([{ isLoading }, { isError }, { error }, { isSuccess }, { data }]);
+  console.log([{ isLoading }, { isError }, { isSuccess }, { data }]);
 
   const {
     register,
@@ -28,14 +40,13 @@ export const LoginPage = () => {
   });
 
   const onSubmit: SubmitHandler<UserRequest> = async (data: UserRequest) => {
-    console.log({ data });
     try {
       const user = await login(data).unwrap();
       localStorage.setItem('authToken', user.token);
       dispatch(setCredentials(user));
       navigate('/');
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      alertToast((err as ErrorMessage).data.message, 'error');
     }
   };
 
@@ -67,7 +78,7 @@ export const LoginPage = () => {
         </label>
         <input
           id='password'
-          type='text'
+          type='password'
           className='mt-2 block w-full p-3 bg-gray-50'
           placeholder='Contraseña del Usuario'
           {...register('password', {

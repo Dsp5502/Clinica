@@ -1,9 +1,8 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
-
 import { useNavigate } from 'react-router-dom';
 
-import { usePostPatientMutation } from '../store/api/patients/patientsApi';
+import { usePutPatientMutation } from '../store/api/patients/patientsApi';
 
+import { SubmitHandler, useForm } from 'react-hook-form';
 import {
   PatientRequest,
   PatientResponse,
@@ -17,15 +16,12 @@ type ErrorMessage = {
   };
 };
 
-const formInit: PatientRequest = {
-  name: '',
-  identification: '',
-  last_name: '',
-  age: 0,
-  phone: '',
+type Props = {
+  patient: PatientResponse | undefined;
 };
-export const FormPatient = () => {
-  const [addPatient, { isLoading }] = usePostPatientMutation();
+
+export const EditFormPatient = ({ patient }: Props) => {
+  const [UpdatePatient, { isLoading }] = usePutPatientMutation();
 
   const navigate = useNavigate();
 
@@ -34,13 +30,16 @@ export const FormPatient = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<PatientRequest>({
-    defaultValues: formInit,
+    defaultValues: patient,
   });
 
   const onSubmit: SubmitHandler<PatientRequest> = async (data) => {
     try {
-      const { name }: PatientResponse = await addPatient(data).unwrap();
-      alertToast(`Paciente ${name} creado correctamente`, 'success');
+      const { name }: PatientResponse = await UpdatePatient({
+        ...data,
+        id: patient?._id as string,
+      }).unwrap();
+      alertToast(`Paciente ${name} Editado correctamente`, 'success');
       navigate('/patients');
     } catch (error) {
       alertToast((error as ErrorMessage).data.message, 'success');
@@ -91,8 +90,9 @@ export const FormPatient = () => {
           <input
             id='identification'
             type='text'
-            className='mt-2 block w-full p-3 bg-gray-50'
+            className='mt-2 block w-full p-3 bg-gray-50  opacity-80'
             placeholder='# Documento del Paciente'
+            disabled={true}
             {...register('identification', { required: 'Campo requerido' })}
           />
           <p className='text-red-500 text-xs italic'>
@@ -156,7 +156,7 @@ export const FormPatient = () => {
           type='submit'
           disabled={isLoading}
           className='mt-5 w-full bg-blue-800 hover:bg-blue-500 p-3 uppercase font-bold text-white text-lg'
-          value={isLoading ? 'Guardando...' : 'Registrar Paciente'}
+          value={isLoading ? 'Editando...' : 'Editar Paciente'}
         />
       </form>
     </>

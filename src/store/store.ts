@@ -1,9 +1,11 @@
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 
 import { configureStore } from '@reduxjs/toolkit';
+
 import { doctorsApi } from './api/doctors/doctorsApi';
 import { patientsApi } from './api/patients/patientsApi';
 import { userApi } from './api/user/userApi';
+
 import userSlice from './slices/user/userSlice';
 
 export const store = configureStore({

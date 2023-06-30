@@ -1,11 +1,12 @@
+import { useGetAllDoctorsQuery } from '../store/api/doctors/doctorsApi';
+
 import { Doctor } from '../components/Doctor';
 import { Spinner } from '../components/Spinner';
-import { useGetAllDoctorsQuery } from '../store/api/doctors/doctorsApi';
+
 import { Doctor as DoctorType } from '../types/doctors.types';
 
 export const Doctors = () => {
-  const { data, isLoading, isError, error, isFetching } =
-    useGetAllDoctorsQuery();
+  const { data, isFetching } = useGetAllDoctorsQuery();
 
   if (isFetching) return <Spinner data={'Doctores'} />;
   return (

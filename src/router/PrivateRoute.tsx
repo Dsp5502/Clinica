@@ -1,4 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
+
 import { decodeToken } from '../helpers/decodeToken';
 
 export const PrivateRoute = () => {

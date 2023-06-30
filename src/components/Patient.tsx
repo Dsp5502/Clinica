@@ -1,3 +1,9 @@
+import { useNavigate } from 'react-router-dom';
+
+import Swal from 'sweetalert2';
+
+import { useDeletePatientMutation } from '../store/api/patients/patientsApi';
+
 import { Patient as PatientType } from '../types/patient.types';
 
 interface Props {
@@ -5,7 +11,35 @@ interface Props {
 }
 
 export const Patient = ({ patient }: Props) => {
+  const navigate = useNavigate();
+  const [deletePatient] = useDeletePatientMutation();
+
   const { name, _id, age, last_name, identification, phone } = patient;
+
+  const alertModal = async () => {
+    Swal.fire({
+      title: `¿Estás seguro de eliminar el paciente ${name} ${last_name}?`,
+      text: '¡No podrás revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'rgb(37 99 235)',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminarlo!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deletePatient(_id)
+          .unwrap()
+          .then(() => {
+            Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+            navigate('/patients');
+          })
+          .catch(() => {
+            Swal.fire('Error!', 'Error al eliminar el paciente.', 'error');
+          });
+      }
+    });
+  };
 
   return (
     <tr className='border-b'>
@@ -27,12 +61,14 @@ export const Patient = ({ patient }: Props) => {
         <button
           type='button'
           className='text-blue-600 hover:text-blue-600 font-bold text-xs'
+          onClick={() => navigate(`/patients/edit/${_id}`)}
         >
           Editar
         </button>
         <button
           type='button'
           className='text-red-600 hover:text-red-600 font-bold text-xs'
+          onClick={alertModal}
         >
           Eliminar
         </button>

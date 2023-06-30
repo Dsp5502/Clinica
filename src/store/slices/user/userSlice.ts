@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import type { PayloadAction } from '@reduxjs/toolkit';
+
 import { RootState } from '../../store';
+
 import { User, UserResponse } from '../../../interface/user.interface';
-
-
 
 const userSlice = createSlice({
   name: 'auth',
