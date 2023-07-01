@@ -42,7 +42,7 @@ export const EditFormPatient = ({ patient }: Props) => {
       alertToast(`Paciente ${name} Editado correctamente`, 'success');
       navigate('/patients');
     } catch (error) {
-      alertToast((error as ErrorMessage).data.message, 'success');
+      alertToast((error as ErrorMessage).data.message, 'error');
     }
   };
 

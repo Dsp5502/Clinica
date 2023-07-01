@@ -18,8 +18,6 @@ export const Patients = () => {
       skip: 0,
     });
 
-  console.log(error);
-
   if (isLoading) return <Spinner data={'Pacientes'} />;
 
   if (isError && error) {
@@ -39,9 +37,9 @@ export const Patients = () => {
           <table className='w-full bg-white shadow mt-5 table-auto'>
             <thead className='bg-blue-800 text-white '>
               <tr>
-                <th className='p-2'>Paciente</th>
-                <th className='p-2'>Contacto</th>
-                <th className='p-2'>Acciones</th>
+                <th className='p-2 '>Paciente</th>
+                <th className='p-2 text-start'>Contacto</th>
+                <th className='p-2 text-start'>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -50,7 +48,7 @@ export const Patients = () => {
               ))}
             </tbody>
           </table>
-          {data.total >= limit && !isFetching && (
+          {data.total > limit && !isFetching && (
             <button
               className='bg-blue-800 w-full p-2 mt-5 text-white uppercase font-bold hover:bg-blue-700'
               onClick={() => {

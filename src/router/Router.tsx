@@ -4,14 +4,17 @@ import { PrivateRoute } from './PrivateRoute';
 
 import { ErrorPage } from '../components/ErrorPage';
 import { Layout } from '../components/Layout';
+import { LayoutDoctors } from '../components/LayoutDoctors';
 import { LayoutPatients } from '../components/LayoutPatients';
 
 import { Doctors } from '../pages/Doctors';
 import { EditPatient } from '../pages/EditPatient';
 import { Index } from '../pages/Index';
 import { LoginPage } from '../pages/LoginPage';
+import { NewDoctor } from '../pages/NewDoctor';
 import { NewPatient } from '../pages/NewPatient';
 import { Patients } from '../pages/Patients';
+import { EditDoctor } from '../pages/EditDoctor';
 
 export const router = createBrowserRouter([
   {
@@ -51,7 +54,21 @@ export const router = createBrowserRouter([
           },
           {
             path: 'doctors',
-            element: <Doctors />,
+            element: <LayoutDoctors />,
+            children: [
+              {
+                index: true,
+                element: <Doctors />,
+              },
+              {
+                path: 'create',
+                element: <NewDoctor />,
+              },
+              {
+                path: 'edit/:id',
+                element: <EditDoctor />,
+              },
+            ],
           },
         ],
       },

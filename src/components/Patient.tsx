@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { useDeletePatientMutation } from '../store/api/patients/patientsApi';
 
 import { Patient as PatientType } from '../types/patient.types';
+import { AlertDelete } from '../helpers/AlertDelete';
 
 interface Props {
   patient: PatientType;
@@ -17,26 +18,13 @@ export const Patient = ({ patient }: Props) => {
   const { name, _id, age, last_name, identification, phone } = patient;
 
   const alertModal = async () => {
-    Swal.fire({
-      title: `¿Estás seguro de eliminar el paciente ${name} ${last_name}?`,
-      text: '¡No podrás revertir esto!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: 'rgb(37 99 235)',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, eliminarlo!',
-      cancelButtonText: 'Cancelar',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deletePatient(_id)
-          .unwrap()
-          .then(() => {
-            Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-            navigate('/patients');
-          })
-          .catch(() => {
-            Swal.fire('Error!', 'Error al eliminar el paciente.', 'error');
-          });
+    AlertDelete(`${name} ${last_name}`, 'Paciente', async () => {
+      try {
+        await deletePatient(_id).unwrap();
+        Swal.fire('Deleted!', 'El paciente ha sido eliminado.', 'success');
+        navigate('/patients');
+      } catch (error) {
+        Swal.fire('Error!', 'Error al eliminar el paciente.', 'error');
       }
     });
   };

@@ -4,21 +4,27 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import { doctorsApi } from './api/doctors/doctorsApi';
 import { patientsApi } from './api/patients/patientsApi';
+import { specialitiesApi } from './api/specialities/specialitiesApi';
 import { userApi } from './api/user/userApi';
 
 import userSlice from './slices/user/userSlice';
+import specialitiesSlice from './slices/specilities/specialitiesSlice';
 
 export const store = configureStore({
   reducer: {
-    [patientsApi.reducerPath]: patientsApi.reducer,
     [doctorsApi.reducerPath]: doctorsApi.reducer,
+    [patientsApi.reducerPath]: patientsApi.reducer,
+    [specialitiesApi.reducerPath]: specialitiesApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
+
     auth: userSlice,
+    specialities: specialitiesSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
-      patientsApi.middleware,
       doctorsApi.middleware,
+      patientsApi.middleware,
+      specialitiesApi.middleware,
       userApi.middleware,
     ]),
 });
