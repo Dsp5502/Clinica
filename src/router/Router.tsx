@@ -15,11 +15,16 @@ import { NewDoctor } from '../pages/NewDoctor';
 import { NewPatient } from '../pages/NewPatient';
 import { Patients } from '../pages/Patients';
 import { EditDoctor } from '../pages/EditDoctor';
+import { RegisterPage } from '../pages/RegisterPage';
 
 export const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />,
+  },
+  {
+    path: '/register',
+    element: <RegisterPage />,
   },
   {
     path: '/*',

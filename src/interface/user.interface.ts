@@ -3,6 +3,20 @@ export interface UserRequest {
   password: string;
 }
 
+export interface UserRegisterRequest extends UserRequest {
+  name: string;
+  role: string;
+}
+
+export interface UserRegisterResponse {
+  email: string;
+  name: string;
+  role: string;
+  state: boolean;
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+}
 export interface UserResponse {
   token: string | null;
   user: User | null;

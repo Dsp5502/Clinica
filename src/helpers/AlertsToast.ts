@@ -1,6 +1,7 @@
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 export const alertToast = async (error: string, icon: SweetAlertIcon) => {
+  console.log('error', error);
   const Toast = Swal.mixin({
     toast: true,
     position: 'top-right',

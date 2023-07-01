@@ -53,6 +53,9 @@ export const patientsApi = createApi({
           total: response.total,
         };
       },
+      transformErrorResponse: (error): { error: string } => {
+        return { error: (error as { data: { message: string } }).data.message };
+      },
     }),
 
     getPatient: builder.query<Patient, string>({
