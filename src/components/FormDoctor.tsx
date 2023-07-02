@@ -27,8 +27,6 @@ const FormDoctor = () => {
   const [addDoctor, { isLoading }] = usePostDoctorMutation();
   const { data: specialities } = useGetAllSpecialitiesQuery();
 
-  console.log(specialities);
-
   const navigate = useNavigate();
 
   const {
@@ -107,7 +105,7 @@ const FormDoctor = () => {
             ))}
           </select>
           <p className='text-red-500 text-xs italic'>
-            {errors.lastName?.message}
+            {errors.specialtyId?.message}
           </p>
         </div>
         <div className='mb-4'>

@@ -1,6 +1,7 @@
 export type AllPatients = {
   total: number;
   patients: Patient[] | [];
+  map?: (arg0: (patient: Patient) => JSX.Element) => JSX.Element[];
 };
 
 export type Patient = {

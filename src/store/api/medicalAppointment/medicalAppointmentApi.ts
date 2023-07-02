@@ -1,11 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { RootState } from '../../store';
-import type { MedicalAppointmentResponse } from '../../../types/medicalAppointment.types';
+
 import {
   GetAllMedicalAppointmentParams,
   MedicalAppointmentRequest,
+  MedicalAppointmentResponse,
 } from '../../../interface/medicalAppointment.interface';
+
+import { MedicalsAppointmentsResponse } from '../../../types/medicalAppointment.types';
 
 export const medicalAppointmentApi = createApi({
   reducerPath: 'medicalAppointmentApi',
@@ -29,7 +32,7 @@ export const medicalAppointmentApi = createApi({
 
   endpoints: (builder) => ({
     getAllMedicalAppointments: builder.query<
-      MedicalAppointmentResponse,
+      MedicalsAppointmentsResponse,
       GetAllMedicalAppointmentParams
     >({
       query: (params) => {
@@ -46,7 +49,7 @@ export const medicalAppointmentApi = createApi({
         return url;
       },
       providesTags: ['MedicalAppointment'],
-      transformResponse: (response: MedicalAppointmentResponse) => {
+      transformResponse: (response: MedicalsAppointmentsResponse) => {
         return {
           appointments: response.appointments,
           total: response.total,

@@ -1,4 +1,4 @@
-export interface MedicalAppointmentResponse {
+export interface MedicalsAppointmentsResponse {
   total: number;
   appointments: Appointment[];
 }

@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 import Swal from 'sweetalert2';
@@ -6,7 +8,10 @@ import { Appointment as AppointmentType } from '../types/medicalAppointment.type
 
 import { AlertDelete } from '../helpers/AlertDelete';
 
+import { useGetAllPatientsQuery } from '../store/api/patients/patientsApi';
 import { useDeleteMedicalAppointmentMutation } from '../store/api/medicalAppointment/medicalAppointmentApi';
+
+import { AllPatients } from '../types/patient.types';
 
 interface Props {
   appointment: AppointmentType;
@@ -14,10 +19,24 @@ interface Props {
 
 export const MedicalsAppointment = ({ appointment }: Props) => {
   const navigate = useNavigate();
+
+  const [patientApi, setPatientApi] = useState<AllPatients>();
+
+  const { data: patients } = useGetAllPatientsQuery({
+    limit: 50,
+    skip: 0,
+  });
+
   const [deleteAppointment] = useDeleteMedicalAppointmentMutation();
 
   const { _id, documentPatient, specialtyId, appointmentDate, doctorId } =
     appointment;
+
+  useEffect(() => {
+    if (patients) {
+      setPatientApi(patients);
+    }
+  }, [patients]);
 
   const alertModal = async () => {
     AlertDelete(
@@ -39,10 +58,17 @@ export const MedicalsAppointment = ({ appointment }: Props) => {
     );
   };
 
+  // Filter patient
+  const patient = patientApi?.patients.find(
+    (patient) => patient.identification === documentPatient
+  );
+
   return (
     <tr className='border-b'>
       <td className='p-6 space-y-2'>
-        <p className='text-2xl text-gray-800'>Paciente No: {documentPatient}</p>
+        <p className='text-2xl text-gray-800'>
+          Paciente: {patient?.name} {patient?.last_name}
+        </p>
         <span className='text-gray-600 text-xs block'>
           {' '}
           Doctor: {doctorId.firstName} {doctorId.lastName}
