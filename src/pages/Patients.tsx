@@ -21,13 +21,7 @@ export const Patients = () => {
   if (isLoading) return <Spinner data={'Pacientes'} />;
 
   if (isError && error) {
-    if ('status' in error) {
-      const errMsg =
-        'error' in error ? error.error : JSON.stringify(error.data);
-      alertToast(errMsg, 'error');
-    } else {
-      alertToast(error.message || ' Error al cargar los pacientes', 'error');
-    }
+    alertToast(error, 'error');
     return (
       <p className='text-center mt-10'> No se pudo cargar los pacientes</p>
     );

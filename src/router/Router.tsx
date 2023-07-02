@@ -16,6 +16,10 @@ import { NewPatient } from '../pages/NewPatient';
 import { Patients } from '../pages/Patients';
 import { EditDoctor } from '../pages/EditDoctor';
 import { RegisterPage } from '../pages/RegisterPage';
+import LayoutMedicalAppointment from '../components/LayoutMedicalAppointment';
+import MedicalAppointment from '../pages/MedicalAppointment';
+import { NewMedicalAppointment } from '../pages/NewMedicalAppointment';
+import { EditNewMedicalAppointment } from '../pages/EditNewMedicalAppointment';
 
 export const router = createBrowserRouter([
   {
@@ -72,6 +76,24 @@ export const router = createBrowserRouter([
               {
                 path: 'edit/:id',
                 element: <EditDoctor />,
+              },
+            ],
+          },
+          {
+            path: 'medicalAppointment',
+            element: <LayoutMedicalAppointment />,
+            children: [
+              {
+                index: true,
+                element: <MedicalAppointment />,
+              },
+              {
+                path: 'create',
+                element: <NewMedicalAppointment />,
+              },
+              {
+                path: 'edit/:id',
+                element: <EditNewMedicalAppointment />,
               },
             ],
           },

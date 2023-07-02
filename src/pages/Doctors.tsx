@@ -20,7 +20,7 @@ export const Doctors = () => {
   if (isLoading) return <Spinner data={'Doctores'} />;
 
   if (isError && error) {
-    alertToast(' No se pudo cargar los Dootores', 'error');
+    alertToast(error, 'error');
     return <p className='text-center mt-10'> No se pudo cargar los doctores</p>;
   }
 

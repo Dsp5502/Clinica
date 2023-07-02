@@ -1,6 +1,13 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {
+  FetchBaseQueryError,
+  createApi,
+  fetchBaseQuery,
+} from '@reduxjs/toolkit/query/react';
+
+import { SerializedError } from '@reduxjs/toolkit';
 
 import { RootState } from '../../store';
+
 import {
   GetAllPatientsParams,
   PatientRequest,
@@ -53,8 +60,10 @@ export const patientsApi = createApi({
           total: response.total,
         };
       },
-      transformErrorResponse: (error): { error: string } => {
-        return { error: (error as { data: { message: string } }).data.message };
+      transformErrorResponse: (
+        error
+      ): FetchBaseQueryError | SerializedError => {
+        return error;
       },
     }),
 
