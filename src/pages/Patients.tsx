@@ -11,11 +11,13 @@ import { alertToast } from '../helpers/AlertsToast';
 
 export const Patients = () => {
   const [limit, setLimit] = useState<number>(5);
+  const [searchText, setSearchText] = useState('');
 
   const { data, isLoading, isFetching, error, isError } =
     useGetAllPatientsQuery({
       limit: limit,
       skip: 0,
+      searchTerm: searchText,
     });
 
   if (isLoading) return <Spinner data={'Pacientes'} />;
@@ -31,6 +33,18 @@ export const Patients = () => {
     <>
       <h1 className='font-black text-4xl text-blue-900'> Pacientes</h1>
       <p>Administra tus Clientes</p>
+
+      <div className='flex justify-between items-center mt-5 '>
+        <div className='flex items-center w-full '>
+          <input
+            type='text'
+            className='rounded-md border-2 border-gray-300 p-2 focus:outline-none focus:border-blue-500 w-2/4 '
+            placeholder='Buscar'
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </div>
+      </div>
 
       {data?.patients.length ? (
         <>

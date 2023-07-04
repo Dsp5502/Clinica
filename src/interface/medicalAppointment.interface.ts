@@ -1,6 +1,7 @@
 export interface GetAllMedicalAppointmentParams {
   limit?: number;
   skip?: number;
+  searchTerm?: string;
 }
 
 export interface MedicalAppointmentRequest {
@@ -8,6 +9,7 @@ export interface MedicalAppointmentRequest {
   specialtyId: string;
   appointmentDate: string;
   doctorId: string;
+  patientId: string;
 }
 
 export interface MedicalAppointmentResponse {
@@ -17,4 +19,5 @@ export interface MedicalAppointmentResponse {
   doctorId: string;
   state: boolean;
   _id: string;
+  patientId: string;
 }

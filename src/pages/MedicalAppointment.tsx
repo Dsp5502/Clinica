@@ -11,11 +11,14 @@ import { MedicalsAppointment } from '../components/MedicalsAppointment';
 import { alertToast } from '../helpers/AlertsToast';
 
 const MedicalAppointment = () => {
+  const [searchText, setSearchText] = useState('');
+
   const [limit, setLimit] = useState<number>(5);
   const { data, isFetching, isLoading, error, isError } =
     useGetAllMedicalAppointmentsQuery({
       limit: limit,
       skip: 0,
+      searchTerm: searchText,
     });
 
   if (isLoading) return <Spinner data={'Citas'} />;
@@ -29,6 +32,18 @@ const MedicalAppointment = () => {
     <>
       <h1 className='font-black text-4xl text-blue-900'> Citas Medicas</h1>
       <p>Administra tus Citas</p>
+
+      <div className='flex justify-between items-center mt-5 '>
+        <div className='flex items-center w-full '>
+          <input
+            type='text'
+            className='rounded-md border-2 border-gray-300 p-2 focus:outline-none focus:border-blue-500 w-2/4 '
+            placeholder='Buscar'
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </div>
+      </div>
 
       {data?.appointments.length ? (
         <>

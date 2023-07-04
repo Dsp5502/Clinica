@@ -39,6 +39,7 @@ const formInit: MedicalAppointmentRequest = {
   specialtyId: '',
   appointmentDate: '',
   doctorId: '',
+  patientId: '',
 };
 
 export const FormMedicalAppointment = () => {
@@ -94,6 +95,14 @@ export const FormMedicalAppointment = () => {
 
   const onSubmit: SubmitHandler<MedicalAppointmentRequest> = async (data) => {
     try {
+      data = {
+        ...data,
+        patientId:
+          patientApi?.patients?.find(
+            (patient) => patient.identification === data.documentPatient
+          )?._id || '',
+      };
+      console.log(data);
       const { _id } = await addAppointment(data).unwrap();
       alertToast(`Cita con ${_id} creada correctamente`, 'success');
       navigate('/medicalAppointment');

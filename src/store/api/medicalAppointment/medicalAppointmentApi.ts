@@ -36,15 +36,24 @@ export const medicalAppointmentApi = createApi({
       GetAllMedicalAppointmentParams
     >({
       query: (params) => {
-        const { limit, skip } = params;
+        const { limit, skip, searchTerm } = params;
         let url = '/medicalAppointment';
 
-        if (limit !== undefined && skip !== undefined) {
-          url += `?limit=${limit}&skip=${skip}`;
-        } else if (limit !== undefined) {
-          url += `?limit=${limit}`;
-        } else if (skip !== undefined) {
-          url += `?skip=${skip}`;
+        const queryParams = new URLSearchParams();
+
+        if (limit !== undefined) {
+          queryParams.append('limit', limit.toString());
+        }
+        if (skip !== undefined) {
+          queryParams.append('skip', skip.toString());
+        }
+
+        if (searchTerm !== undefined) {
+          queryParams.append('searchTerm', searchTerm);
+        }
+
+        if (queryParams.toString() !== '') {
+          url += `?${queryParams.toString()}`;
         }
         return url;
       },

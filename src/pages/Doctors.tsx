@@ -9,11 +9,14 @@ import { Doctor as DoctorType } from '../types/doctors.types';
 import { alertToast } from '../helpers/AlertsToast';
 
 export const Doctors = () => {
+  const [searchText, setSearchText] = useState('');
+
   const [limit, setLimit] = useState<number>(5);
   const { data, isFetching, isLoading, error, isError } = useGetAllDoctorsQuery(
     {
       limit: limit,
       skip: 0,
+      searchTerm: searchText,
     }
   );
 
@@ -28,6 +31,18 @@ export const Doctors = () => {
     <>
       <h1 className='font-black text-4xl text-blue-900'> Doctores</h1>
       <p>Administra tus Doctores</p>
+
+      <div className='flex justify-between items-center mt-5 '>
+        <div className='flex items-center w-full '>
+          <input
+            type='text'
+            className='rounded-md border-2 border-gray-300 p-2 focus:outline-none focus:border-blue-500 w-2/4 '
+            placeholder='Buscar'
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </div>
+      </div>
 
       {data?.doctors.length ? (
         <>

@@ -22,4 +22,5 @@ export interface PatientResponse {
 export interface GetAllPatientsParams {
   limit?: number;
   skip?: number;
+  searchTerm?: string;
 }

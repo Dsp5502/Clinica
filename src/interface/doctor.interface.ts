@@ -22,4 +22,5 @@ export interface DoctorResponse {
 export interface GetAllDoctorParams {
   limit?: number;
   skip?: number;
+  searchTerm?: string;
 }

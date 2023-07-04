@@ -85,7 +85,10 @@ export const MedicalsAppointment = ({ appointment }: Props) => {
         </p>
         <p className='text-gray-600'>
           <span className='text-gray-800 uppercase font-bold'>Hora: </span>
-          {new Date(appointmentDate).toLocaleTimeString()}
+          {new Date(appointmentDate).toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          })}
         </p>
       </td>
       <td className='p-6  flex gap-3'>
