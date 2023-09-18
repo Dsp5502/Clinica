@@ -1,6 +1,6 @@
 # CRM - CLINICA
 
-Este es el repositorio del proyecto CRM - Clínica, el cual fue desarrollado como parte del curso de la Universidad Distrital, bajo la iniciativa "Todos A la U". El objetivo principal de este proyecto es consumir el API Clínica y proporcionar una interfaz de usuario intuitiva para administrar y gestionar diferentes aspectos de una clínica médica.
+Este es el repositorio del proyecto CRM - Clínica, el cual fue desarrollado como parte del curso de Protalento, bajo la iniciativa DevF. El objetivo principal de este proyecto es consumir el API Clínica y proporcionar una interfaz de usuario intuitiva para administrar y gestionar diferentes aspectos de una clínica médica.
 
 ## Características principales
 
